@@ -1,0 +1,29 @@
+%include "io.inc"
+
+section .bss
+    num db 3
+section .text
+global CMAIN
+CMAIN:
+    GET_DEC 1,al
+    mov [num],al
+    push [num]
+    
+    xor eax, eax
+    ret
+fibonacci:
+    push ebp
+    mov ebp,esp
+    mov ebx,[ebp+5]
+    cmp ebx,1
+    jge base
+    dec ebx
+    push ebx
+    call fibonacci
+    
+    ret
+    
+base:
+    mov eax,1
+    ret
+    

@@ -1,0 +1,46 @@
+%include "io.inc"
+section .data
+    ;TABELA DE PROCEDIMENTOS
+    Tabela DB '+' ;valor de pesquisa
+    DD SOMA          ;endereço do processo
+    SizeTabela EQU ($ - Tabela)
+    DB '-'
+    DD SUBTRACAO
+    DB 't'
+    DD OPOSTA
+    NumdCasos EQU ($ - Tabela) / SizeTabela
+    
+    msgA DB "SOMA",0
+    msgB DB "SUBTRACAO",0
+    msgC DB "OPOSTA",0
+section .text
+global CMAIN
+CMAIN:
+    mov ebp, esp; for correct debugging
+    mov al,'t'
+    mov ebx,Tabela
+    mov ecx,NumdCasos
+    
+    L1:
+        cmp al,[ebx]
+        jne L2
+        call [ebx + 1]
+        jmp L3
+    L2:
+        add ebx,SizeTabela
+        dec ecx
+        jmp L1
+    L3:
+        xor eax,eax
+        ret
+    
+SOMA:
+    PRINT_STRING msgA
+    ret
+SUBTRACAO:
+    PRINT_STRING msgB
+    ret
+OPOSTA:
+    PRINT_STRING msgC
+    ret    
+    

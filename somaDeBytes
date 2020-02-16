@@ -1,0 +1,17 @@
+%include "io.inc"
+
+section .data
+    vb DW 80h,66h,0A5h
+
+
+section .text
+global CMAIN
+CMAIN:
+    ;write your code here
+    mov ax,[vb]
+    add ax,[vb+2]
+    add ax,[vb+4]
+    PRINT_HEX 4,ax
+     
+    xor eax, eax
+    ret

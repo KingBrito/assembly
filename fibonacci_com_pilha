@@ -1,0 +1,32 @@
+%include "io.inc"
+
+section .text
+global CMAIN
+CMAIN:
+    push dword 5
+    call FIB
+    PRINT_DEC 4, eax
+    pop ebx
+    xor eax, eax
+    ret
+    
+FIB:
+    push ebp
+    mov ebp, esp
+    mov ebx, [ebp+8]
+    cmp ebx, 0
+    je BASE
+    dec ebx ;n-1
+    push ebx ;salva na pilha
+    call FIB ;chama fib
+    pop ebx 
+    mov eax, ebx
+    inc ebx
+    add eax, ebx
+    pop ebp
+    ret
+    
+BASE:
+    mov eax, 1
+    pop ebp
+    ret

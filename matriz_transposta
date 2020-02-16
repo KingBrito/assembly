@@ -1,0 +1,50 @@
+%include "io.inc"
+
+section .data
+    matrizA db 1,2,3,4,5,6,7,8,9
+
+
+section .bss
+;    matrizA resb 25
+    matrizB resb 25
+    matrizRes resb 25
+    totalRes resb 1
+    numLin resb 1
+    numCol resb 1
+    escalar resb 1
+    totalA resb 1
+    vetor resb 25
+    lenV resb 1
+    auxA resb 1
+    auxB resb 1
+
+section .text
+global CMAIN
+CMAIN:
+    mov ebp, esp; for correct debugging
+    call TRANSPOSTA
+    xor eax, eax
+    ret
+    
+    TRANSPOSTA:
+    mov esi, 0
+    mov edi, 0
+    mov ecx, [totalA]
+    push ecx
+    push esi
+    mov ebp, [numLin]
+    .L1:
+        mov eax, [matrizA+esi]
+        mov ebx, [matrizA+edi]
+        mov [matrizRes+esi], ebx
+        mov [matrizRes+edi], eax
+        inc esi
+        add edi, 3
+        loop .L1
+        pop esi
+        pop ecx
+    .L2:
+        PRINT_DEC 1, [matrizRes+esi] ;mostra valor da matriz resultado
+        inc esi
+        loop .L2
+    ret
